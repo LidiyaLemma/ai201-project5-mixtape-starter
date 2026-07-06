@@ -89,3 +89,13 @@ Every route delegates immediately to a service function. Routes only handle inpu
 **Fix:** Added `.replace(tzinfo=None)` to make the cutoff timezone-naive, matching the format stored in the database.
 
 **One-line summary:** Timezone-aware cutoff couldn't be compared to timezone-naive database datetimes, causing the recency filter to fail.
+
+## AI Usage
+
+I used Claude (AI tool) during this project in the following ways:
+
+1. **Codebase orientation:** Asked the AI to explain what each service file was responsible for after reading them myself. This helped confirm my understanding of the layered architecture (routes → services → models).
+
+2. **Bug investigation:** For each bug, I read the suspicious code first, then asked the AI "what edge cases could cause this function to return wrong values?" For Bug #3, I had already noticed the outerjoin but asked the AI to confirm why joining without distinct causes duplicates. For Bug #5, I spotted `songs[:-1]` and asked the AI to confirm what Python slice notation does with negative indices. For Bug #2, I asked the AI to explain the difference between timezone-aware and timezone-naive datetimes in Python after noticing the cutoff used `timezone.utc` but the database stores naive datetimes.
+
+3. **What I verified myself:** I read every fix myself before applying it and confirmed the specific line that needed changing rather than accepting the AI's suggested fix blindly.
